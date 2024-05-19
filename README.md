@@ -1,2 +1,2 @@
 # C-Kata-Solutions
-Various katas solved in the C programming language
+Solutions for various katas developed in the C programming language
