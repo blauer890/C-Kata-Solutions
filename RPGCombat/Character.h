@@ -3,7 +3,7 @@
 #include <stdbool.h>
 
 #define MAX_HEALTH 1000.0f
-#define MAX_CHARACTER_NAME_LEN 50
+#define MAX_CHARACTER_NAME_LEN 30
 #define MAX_FACTION_NAME_LEN 30
 
 typedef enum CharacterType_E

@@ -1,9 +1,14 @@
 #include <stdio.h>
+#include "Prop.h"
 #include "Character.h"
 
 int main()
 {
     Character_T Patrick, Spongebob;
+    Prop_T ChumBucket, SquidwardsHouse;
+    CreateProp(&ChumBucket, "Chum Bucket", 8000.0f, 50.0f, 50.0f);
+    CreateProp(&SquidwardsHouse, "Squidward's House", 5000.0f, 100.0f, 100.0f);
+
     printf("-------------------------------------------------\n");
     printf("Creating characters Patrick and Spongebob\n");
     CreateCharacter(&Patrick, "Patrick", MELEE);
@@ -136,6 +141,15 @@ int main()
     AttackCharacter(&MrKrabs, &Squidward, 45.0f);
     PrintCharacter(&Squidward);
     PrintCharacter(&MrKrabs);
+
+    MoveToPosition(&Patrick, 49.0f, 49.0f);
+
+    printf("-------------------------------------------------\n");
+    printf("Patrick trying to attack the Chum Bucket with 8000.0f health\n");
+    AttackProp(&Patrick, &ChumBucket, 5.0f);
+    PrintCharacter(&Patrick);
+    PrintCharacter(&Spongebob);
+    PrintProp(&ChumBucket);
 
     RemoveFactions(&Squidward);
     RemoveFactions(&MrKrabs);

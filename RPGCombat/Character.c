@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
+#include "Utilities.h"
 #include "Character.h"
 
 void CreateCharacter(Character_T *characterOut, char *name, CharacterType_T type)
@@ -18,11 +19,21 @@ void CreateCharacter(Character_T *characterOut, char *name, CharacterType_T type
 
 void IncreaseLevel(Character_T *character)
 {
+    if (!character->alive)
+    {
+        return;
+    }
+
     character->level++;
 }
 
 void MoveToPosition(Character_T *character, float xPos, float yPos)
 {
+    if (!character->alive)
+    {
+        return;
+    }
+
     character->xPos = xPos;
     character->yPos = yPos;
 }
@@ -67,14 +78,13 @@ void PrintCharacter(Character_T *character)
     printf("\n");
 }
 
-static float CalculateDistance(float xPosA, float xPosB,
-    float yPosA, float yPosB)
-{
-    return sqrtf((xPosB - xPosA) * (xPosB - xPosA) + (yPosB - yPosA) * (yPosB - yPosA));
-}
-
 void AttackCharacter(Character_T* attacker, Character_T* defender, float attackDamage)
 {
+    if (!attacker->alive)
+    {
+        return;
+    }
+
     if ((attacker != defender) && !CheckAllies(attacker, defender))
     {
         float distance = CalculateDistance(attacker->xPos, defender->xPos,
@@ -114,6 +124,11 @@ void AttackCharacter(Character_T* attacker, Character_T* defender, float attackD
 
 void HealCharacter(Character_T* healer, Character_T* injured, float healAmount)
 {
+    if (!healer->alive || !injured->alive)
+    {
+        return;
+    }
+
     if (injured->alive && (((healer != injured) && CheckAllies(healer, injured)) || (healer == injured)))
     {
         if (injured->health + healAmount < MAX_HEALTH)
@@ -129,6 +144,11 @@ void HealCharacter(Character_T* healer, Character_T* injured, float healAmount)
 
 void AddFaction(Character_T *character, char *factionName)
 {
+    if (!character->alive)
+    {
+        return;
+    }
+
     FactionNode_T *tempNode = NULL;
     FactionNode_T *newNode = (FactionNode_T *)malloc(sizeof(FactionNode_T));
     strcpy(newNode->name, factionName);
