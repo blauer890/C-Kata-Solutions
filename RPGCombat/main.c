@@ -61,6 +61,26 @@ int main()
     PrintCharacter(&Patrick);
     PrintCharacter(&Spongebob);
 
+    printf("-------------------------------------------------\n");
+    printf("Moving Patrick to (49.0f, 49.0f)\n");
+    MoveToPosition(&Patrick, 49.0f, 49.0f);
+    PrintCharacter(&Patrick);
+    PrintCharacter(&Spongebob);
+
+    printf("-------------------------------------------------\n");
+    printf("Patrick trying to attack the Chum Bucket with 5.0f health\n");
+    AttackProp(&Patrick, &ChumBucket, 5.0f);
+    PrintCharacter(&Patrick);
+    PrintCharacter(&Spongebob);
+    PrintProp(&ChumBucket);
+
+    printf("-------------------------------------------------\n");
+    printf("Patrick trying to attack the Chum Bucket with 7995.0f health\n");
+    AttackProp(&Patrick, &ChumBucket, 7995.0f);
+    PrintCharacter(&Patrick);
+    PrintCharacter(&Spongebob);
+    PrintProp(&ChumBucket);
+
     Character_T Squidward, MrKrabs;
     printf("-------------------------------------------------\n");
     printf("Creating characters Squidward and Mr. Krabs\n");
@@ -141,15 +161,6 @@ int main()
     AttackCharacter(&MrKrabs, &Squidward, 45.0f);
     PrintCharacter(&Squidward);
     PrintCharacter(&MrKrabs);
-
-    MoveToPosition(&Patrick, 49.0f, 49.0f);
-
-    printf("-------------------------------------------------\n");
-    printf("Patrick trying to attack the Chum Bucket with 8000.0f health\n");
-    AttackProp(&Patrick, &ChumBucket, 5.0f);
-    PrintCharacter(&Patrick);
-    PrintCharacter(&Spongebob);
-    PrintProp(&ChumBucket);
 
     RemoveFactions(&Squidward);
     RemoveFactions(&MrKrabs);
