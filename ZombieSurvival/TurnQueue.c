@@ -8,6 +8,7 @@
 #include "Survivor.h"
 #include "TurnQueue.h"
 #include "GameManager.h"
+#include "Log.h"
 
 #define MAX_SURVIVORS 5
 #define MIN_SURVIVORS 2
@@ -23,6 +24,7 @@ void InitializeTurnQueue()
         TurnQueue[i] = NULL;
     }
     TurnQueueIndex = 0;
+    LogInfo("starting game...");
 }
 
 void AddSurvivor(Survivor_S *survivor)
@@ -40,6 +42,9 @@ void AddSurvivor(Survivor_S *survivor)
     }
     TurnQueue[i] = survivor;
     SurvivorNum++;
+    char buf[100];
+    sprintf(buf, "survivor %s has been added to the game", survivor->name);
+    LogInfo(buf);
 }
 
 static void RemoveSurvivor(Survivor_S *survivor)
@@ -75,6 +80,9 @@ void WoundSurvivor(Survivor_S *survivor)
         {
             CompleteTurn(survivor);
         }
+        char buf[200];
+        sprintf(buf, "Surivor %s died", survivor->name);
+        LogInfo(buf);
     } else {
         if(GetItemCount(survivor) == MAX_EQUIPMENT)
         {
@@ -89,6 +97,9 @@ void WoundSurvivor(Survivor_S *survivor)
             survivor->ReservesItems[lastReserveItemIndex] = NONE;
         }
     }
+    char buf[200];
+    sprintf(buf, "survivor %s was wounded", survivor->name);
+    LogInfo(buf);
 }
 
 static void AdvanceTurnQueue()
@@ -118,7 +129,6 @@ void CompleteTurn(Survivor_S *survivor)
     if(!strcmp(TurnQueue[TurnQueueIndex]->name, survivor->name))
     {
         AdvanceTurnQueue();
-        printf("Now %s's turn, TurnQueueIndex: %u\n", TurnQueue[TurnQueueIndex]->name, TurnQueueIndex);
     }
 }
 
@@ -127,9 +137,10 @@ void ZombieKilled()
     Level_E maxLevel = GetGameLevel();
     for(uint8_t i = 0; i < MAX_SURVIVORS; i++)
     {
-        if((TurnQueue[i] != NULL) && (TurnQueue[i]->level > BLUE))
+        if((TurnQueue[i] != NULL) && (TurnQueue[i]->level > maxLevel))
         {
             maxLevel = TurnQueue[i]->level;
+            LogInfo("Game has leveled up");
         }
     }
     SetGameLevel(maxLevel);

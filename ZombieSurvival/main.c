@@ -3,13 +3,14 @@
 #include "Survivor.h"
 #include "TurnQueue.h"
 #include "GameManager.h"
+#include "Log.h"
 
 Survivor_S Spongebob;
 Survivor_S Patrick;
 
 void ExampleAction()
 {
-    printf("Performed an action\n");
+    LogInfo("Example action");
 }
 
 void SpongebobAddItems()
@@ -21,11 +22,12 @@ void SpongebobAddItems()
     Spongebob.ReservesItems[2] = BOTTLED_WATER;
     Spongebob.ReservesItems[3] = FRYING_PAN;
     Spongebob.ReservesItems[4] = NONE;
+    LogInfo("Spongebob added items");
 }
 
 void SpongebobKillZombie()
 {
-    printf("Spongebob killing zombie\n");
+    LogInfo("Spongebob killing zombie");
     KillZombie(&Spongebob);
     ZombieKilled();
 }
@@ -43,7 +45,7 @@ int main()
     TakeAction(&Spongebob, ExampleAction);
     TakeAction(&Spongebob, SpongebobAddItems);
 
-    printf("Spongebob completing turn in main.c\n");
+    LogInfo("Spongebob completing turn");
     CompleteTurn(&Spongebob);
 
     WoundSurvivor(&Spongebob);
@@ -51,7 +53,7 @@ int main()
     TakeAction(&Patrick, ExampleAction);
     TakeAction(&Patrick, ExampleAction);
 
-    printf("Patrick completing turn in main.c\n");
+    LogInfo("Patrick completing turn");
     CompleteTurn(&Patrick);
 
     TakeAction(&Spongebob, SpongebobKillZombie);
@@ -62,15 +64,9 @@ int main()
     CompleteTurn(&Spongebob);
     CompleteTurn(&Patrick);
 
-    printf("Spongebob level: %u\n", Spongebob.level);
-    printf("Game level: %u\n", GetGameLevel());
-
     TakeAction(&Spongebob, SpongebobKillZombie);
     TakeAction(&Spongebob, SpongebobKillZombie);
     TakeAction(&Spongebob, SpongebobKillZombie);
-
-    printf("Spongebob level: %u\n", Spongebob.level);
-    printf("Game level: %u\n", GetGameLevel());
 
     return 0;
 }

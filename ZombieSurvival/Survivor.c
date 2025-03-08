@@ -1,4 +1,5 @@
 #include "Survivor.h"
+#include "Log.h"
 #include <assert.h>
 #include <string.h>
 #include <stdio.h>
@@ -47,12 +48,21 @@ void KillZombie(Survivor_S *survivor)
     survivor->experience++;
     if((survivor->experience >= 6) && (survivor->level != YELLOW))
     {
+        char buf[200];
+        sprintf(buf, "Survivor %s leveled up to yellow", survivor->name);
+        LogInfo(buf);
         survivor->level = YELLOW;
     } else if((survivor->experience >= 18) && (survivor->level != ORANGE))
     {
+        char buf[200];
+        sprintf(buf, "Survivor %s leveled up to orange", survivor->name);
+        LogInfo(buf);
         survivor->level = ORANGE;
     } else if((survivor->experience >= 42) && (survivor->level != RED))
     {
+        char buf[200];
+        sprintf(buf, "Survivor %s leveled up to red", survivor->name);
+        LogInfo(buf);
         survivor->level = RED;
     }
 }
