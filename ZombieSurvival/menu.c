@@ -14,32 +14,38 @@ int main(int argc, char *argv[])
     InitializeTurnQueue();
     printf("\n");
     StartGame();
-    int numOfSurvivors = 0;
     while(GameRunning())
     {
-        if(numOfSurvivors > 0)
+        if(NumberOfSurivors() > 0)
         {
             Survivor_S *activeSurvivor;
             ActiveSurvivor(&activeSurvivor);
-            printf("%s\'s turn, actions left: %u\n",activeSurvivor->name, activeSurvivor->actions);
+            printf("%s\'s turn, actions left: %u\n", activeSurvivor->name, activeSurvivor->actions);
             printf("Options: \n");
-            printf("Explore - 1\n");
-            printf("End turn - 2\n");
-            printf("End game - 3\n");
+            printf("Kill zombie - 1\n");
+            printf("Explore - 2\n");
+            printf("End turn - 3\n");
+            printf("End game - 4\n");
             printf("Enter an option: ");
             int option = 0;
             scanf("%d", &option);
             if(option == 1)
             {
-                printf("\n");
-                printf("Exploring terrain\n");
-                activeSurvivor->actions--;
+                KillZombie(activeSurvivor);
+                CompleteAction(activeSurvivor);
             } else if(option == 2)
             {
-                CompleteTurn(activeSurvivor);
+                printf("\n");
+                printf("Exploring terrain\n");
+                CompleteAction(activeSurvivor);
             } else if(option == 3)
             {
+                CompleteTurn(activeSurvivor);
+            } else if(option == 4)
+            {
                 EndGame();
+            } else {
+                continue;
             }
             printf("\n");
         } else {
@@ -60,10 +66,11 @@ int main(int argc, char *argv[])
                 CreateSurvivor(&survivor1,name,strlen(name));
                 AddSurvivor(&survivor1);
                 printf("\n");
-                numOfSurvivors++;
             } else if(option == 2)
             {
                 EndGame();
+            } else {
+                continue;
             }
         }
     }

@@ -26,6 +26,11 @@ void InitializeTurnQueue()
     printf("Starting game...\n");
 }
 
+uint32_t NumberOfSurivors()
+{
+    return SurvivorNum;
+}
+
 void ActiveSurvivor(Survivor_S **survivor)
 {
     *survivor = TurnQueue[TurnQueueIndex];
@@ -76,7 +81,7 @@ static void RemoveSurvivor(Survivor_S *survivor)
 void WoundSurvivor(Survivor_S *survivor)
 {
     survivor->wounds++;
-    if(survivor->wounds == 2)
+    if(survivor->wounds == survivor->maxWounds)
     {
         RemoveSurvivor(survivor);
         if(!strcmp(TurnQueue[TurnQueueIndex]->name, survivor->name))
@@ -125,10 +130,22 @@ static void AdvanceTurnQueue()
 
 void CompleteTurn(Survivor_S *survivor)
 {
-    survivor->actions = 3;
+    survivor->actions = 0;
     if(!strcmp(TurnQueue[TurnQueueIndex]->name, survivor->name))
     {
         AdvanceTurnQueue();
+    }
+}
+
+void CompleteAction(Survivor_S *survivor)
+{
+    if(survivor->actions < survivor->maxActions)
+    {
+        survivor->actions++;
+        if(survivor->actions == survivor->maxActions)
+        {
+            CompleteTurn(survivor);
+        }
     }
 }
 

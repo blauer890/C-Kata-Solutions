@@ -1,7 +1,7 @@
-main: main.c Survivor.c TurnQueue.c GameManager.c Log.c
-	gcc -g -o main main.c Survivor.c TurnQueue.c GameManager.c Log.c
+menu: menu.c Survivor.c TurnQueue.c GameManager.c
+	gcc -g -o menu menu.c Survivor.c TurnQueue.c GameManager.c
 
-all: main
+all: menu
 
 clean:
-	rm main game.log
+	rm menu
