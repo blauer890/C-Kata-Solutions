@@ -23,43 +23,25 @@ int main(int argc, char *argv[])
             ActiveSurvivor(&activeSurvivor);
             printf("%s\'s turn, actions left: %u\n",activeSurvivor->name, activeSurvivor->actions);
             printf("Options: \n");
-            if(activeSurvivor->InHandItems[0] != PISTOL)
+            printf("Explore - 1\n");
+            printf("End turn - 2\n");
+            printf("End game - 3\n");
+            printf("Enter an option: ");
+            int option = 0;
+            scanf("%d", &option);
+            if(option == 1)
             {
-                printf("Explore - 1\n");
-                printf("End turn - 2\n");
-                printf("End game - 3\n");
-                printf("Enter an option: ");
-                int option = 0;
-                scanf("%d", &option);
-                if(option == 1)
-                {
-                    printf("\n");
-                    printf("Exploring terrain\n");
-                    activeSurvivor->actions--;
-                } else if(option == 2)
-                {
-                    CompleteTurn(activeSurvivor);
-                } else if(option == 3)
-                {
-                    EndGame();
-                }
                 printf("\n");
-            } else
+                printf("Exploring terrain\n");
+                activeSurvivor->actions--;
+            } else if(option == 2)
             {
-                printf("End turn - 1\n");
-                printf("End game - 2\n");
-                printf("Enter an option: ");
-                int option = 0;
-                scanf("%d", &option);
-                if(option == 1)
-                {
-                    CompleteTurn(activeSurvivor);
-                } else if(option == 2)
-                {
-                    EndGame();
-                }
-                printf("\n");
+                CompleteTurn(activeSurvivor);
+            } else if(option == 3)
+            {
+                EndGame();
             }
+            printf("\n");
         } else {
             printf("Options: \n");
             printf("Create a new survivor - 1\n");
