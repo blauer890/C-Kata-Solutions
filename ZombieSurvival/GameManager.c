@@ -1,5 +1,6 @@
+#include <stdio.h>
+
 #include "GameManager.h"
-#include "Log.h"
 
 bool GameActive = false;
 Level_E GameLevel = BLUE;
@@ -11,7 +12,7 @@ void StartGame()
 
 void EndGame()
 {
-    LogInfo("Game ended");
+    printf("Game ended\n");
     GameActive = false;
 }
 

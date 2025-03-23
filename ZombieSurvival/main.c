@@ -3,14 +3,13 @@
 #include "Survivor.h"
 #include "TurnQueue.h"
 #include "GameManager.h"
-#include "Log.h"
 
 Survivor_S Spongebob;
 Survivor_S Patrick;
 
 void ExampleAction()
 {
-    LogInfo("Example action");
+    printf("Example action");
 }
 
 void SpongebobAddItems()
@@ -27,7 +26,7 @@ void SpongebobAddItems()
 
 void SpongebobKillZombie()
 {
-    LogInfo("Spongebob killing zombie");
+    printf("Spongebob killing zombie");
     KillZombie(&Spongebob);
     ZombieKilled();
 }
@@ -45,7 +44,7 @@ int main()
     TakeAction(&Spongebob, ExampleAction);
     TakeAction(&Spongebob, SpongebobAddItems);
 
-    LogInfo("Spongebob completing turn");
+    printf("Spongebob completing turn");
     CompleteTurn(&Spongebob);
 
     WoundSurvivor(&Spongebob);
@@ -53,7 +52,7 @@ int main()
     TakeAction(&Patrick, ExampleAction);
     TakeAction(&Patrick, ExampleAction);
 
-    LogInfo("Patrick completing turn");
+    printf("Patrick completing turn");
     CompleteTurn(&Patrick);
 
     TakeAction(&Spongebob, SpongebobKillZombie);
