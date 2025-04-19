@@ -25,6 +25,18 @@ typedef enum
     RED
 } Level_E;
 
+typedef enum
+{
+    SKILLS_PLUS_ONE_ACTION,
+    SKILLS_PLUS_ONE_DIE_RANGED,
+    SKILLS_PLUS_ONE_DIE_MELEE,
+    SKILLS_PLUS_ONE_FREE_MOVE_ACTION,
+    SKILLS_HOARD,
+    SKILLS_SNIPER,
+    SKILLS_TOUGH,
+    SKILLS_NONE
+} Skills_E;
+
 typedef struct
 {
     char name[MAX_SURVIVOR_NAME_LEN];
@@ -36,10 +48,11 @@ typedef struct
     Equipment_E ReservesItems[5];
     uint32_t experience;
     Level_E level;
-    uint32_t skills;
+    Skills_E skills[10];
 } Survivor_S;
 
 void CreateSurvivor(Survivor_S *newSurvivor, char *name, size_t nameLen);
 int GetItemCount(Survivor_S *survivor);
 void KillZombie(Survivor_S *survivor);
+void AddNewSkill(Survivor_S *survivor, Skills_E newSkill);
 

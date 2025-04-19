@@ -13,7 +13,10 @@ void CreateSurvivor(Survivor_S *newSurvivor, char *name, size_t nameLen)
     newSurvivor->maxActions = 3;
     newSurvivor->experience = 0;
     newSurvivor->level = BLUE;
-    newSurvivor->skills = 0;
+    for(int i = 0; i < 10; i++)
+    {
+        newSurvivor->skills[i] = SKILLS_NONE;
+    }
 }
 
 int GetItemCount(Survivor_S *survivor)
@@ -39,47 +42,14 @@ int GetItemCount(Survivor_S *survivor)
 void KillZombie(Survivor_S *survivor)
 {
     survivor->experience++;
-    switch(survivor->experience)
-    {
-    case 7:
-        survivor->level = YELLOW;
-        survivor->maxActions++;
-        survivor->skills++;
-        printf("Survivor %s leveled up to yellow and is at %u max actions\n", survivor->name, survivor->maxActions);
-        break;
-    case 50:
-    case 93:
-        survivor->maxActions++;
-        survivor->skills++;
-        printf("Survivor %s unlocked another action, at %u actions\n", survivor->name, survivor->maxActions);
-        break;
-    case 18:
-        survivor->level = ORANGE;
-        survivor->maxWounds += 2;
-        survivor->skills += 2;
-        printf("Survivor %s leveled up to orange and is at %u wounds\n", survivor->name, survivor->actions);
-        break;
-    case 61:
-    case 104:
-        survivor->maxWounds += 2;
-        survivor->skills += 2;
-        printf("Survivor %s increased max wounds by 2, at %u max wounds\n", survivor->name, survivor->maxWounds);
-        break;
-    case 43:
-        survivor->level = RED;
-        survivor->maxWounds += 3;
-        survivor->skills += 3;
-        printf("Survivor %s leveled up to red and is at %u max wounds\n", survivor->name, survivor->maxWounds);
-        break;
-    case 86:
-    case 129:
-        survivor->maxWounds += 3;
-        survivor->skills += 3;
-        printf("Survivor %s increased max wounds by 3, at %u max wounds\n", survivor->name, survivor->maxWounds);
-        break;
-    default:
-        break;
-    }
 }
 
-
+void AddNewSkill(Survivor_S *survivor, Skills_E newSkill)
+{
+    int i = 0;
+    while((i < 10) && (survivor->skills[i] != SKILLS_NONE))
+    {
+        i++;
+    }
+    survivor->skills[i] = newSkill;
+}
