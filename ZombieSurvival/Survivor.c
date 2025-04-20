@@ -3,6 +3,61 @@
 #include <string.h>
 #include <stdio.h>
 
+uint32_t yellowLevels[3] = {7,50,93};
+uint32_t orangeLevels[3] = {18,61,104};
+uint32_t redLevels[3] = {43,86,129};
+
+bool FirstYellowLevel(uint32_t experience)
+{
+    return experience == yellowLevels[0];
+}
+
+bool FirstOrangeLevel(uint32_t experience)
+{
+    return experience == orangeLevels[0];
+}
+
+bool FirstRedLevel(uint32_t experience)
+{
+    return experience == redLevels[0];
+}
+
+bool InYellowLevels(uint32_t experience)
+{
+    for (uint32_t i = 0; i < 3; i++)
+    {
+        if (experience == yellowLevels[i])
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool InOrangeLevels(uint32_t experience)
+{
+    for (uint32_t i = 0; i < 3; i++)
+    {
+        if (experience == orangeLevels[i])
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool InRedLevels(uint32_t experience)
+{
+    for (uint32_t i = 0; i < 3; i++)
+    {
+        if (experience == redLevels[i])
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 void CreateSurvivor(Survivor_S *newSurvivor, char *name, size_t nameLen)
 {
     assert(nameLen < MAX_SURVIVOR_NAME_LEN);

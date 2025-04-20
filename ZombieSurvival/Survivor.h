@@ -2,6 +2,7 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define MAX_SURVIVOR_NAME_LEN 30
 #define MAX_EQUIPMENT 5
@@ -50,6 +51,14 @@ typedef struct
     Level_E level;
     Skills_E skills[10];
 } Survivor_S;
+
+bool FirstYellowLevel(uint32_t experience);
+bool FirstOrangeLevel(uint32_t experience);
+bool FirstRedLevel(uint32_t experience);
+
+bool InYellowLevels(uint32_t experience);
+bool InOrangeLevels(uint32_t experience);
+bool InRedLevels(uint32_t experience);
 
 void CreateSurvivor(Survivor_S *newSurvivor, char *name, size_t nameLen);
 int GetItemCount(Survivor_S *survivor);

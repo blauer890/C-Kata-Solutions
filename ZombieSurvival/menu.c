@@ -7,44 +7,54 @@
 
 #define MAX_SURVIVORS 5
 
-uint32_t yellowLevels[3] = {7,50,93};
-uint32_t orangeLevels[3] = {18,61,104};
-uint32_t redLevels[3] = {43,86,129};
+/*
+    SKILLS_PLUS_ONE_ACTION,
+    SKILLS_PLUS_ONE_DIE_RANGED,
+    SKILLS_PLUS_ONE_DIE_MELEE,
+    SKILLS_PLUS_ONE_FREE_MOVE_ACTION,
+    SKILLS_HOARD,
+    SKILLS_SNIPER,
+    SKILLS_TOUGH,
+    SKILLS_NONE
+*/
 
-bool inYellowLevels(uint32_t experience)
+void PrintSurvivorSkills(Survivor_S *survivor)
 {
-    for (uint32_t i = 0; i < 3; i++)
+    printf("%s\'s skills:\n", survivor->name);
+    for (int i = 0; i < 10; i++)
     {
-        if (experience == yellowLevels[i])
+        if (survivor->skills[i] == SKILLS_NONE)
         {
-            return true;
+            break;
         }
-    }
-    return false;
-}
-
-bool inOrangeLevels(uint32_t experience)
-{
-    for (uint32_t i = 0; i < 3; i++)
-    {
-        if (experience == orangeLevels[i])
+        switch(survivor->skills[i])
         {
-            return true;
+            case SKILLS_PLUS_ONE_ACTION:
+                printf("+1 One Action,\n");
+                break;
+            case SKILLS_PLUS_ONE_DIE_RANGED:
+                printf("+1 One Die Ranged,\n");
+                break;
+            case SKILLS_PLUS_ONE_DIE_MELEE:
+                printf("+1 One Die Melee,\n");
+                break;
+            case SKILLS_PLUS_ONE_FREE_MOVE_ACTION:
+                printf("+1 One Free Move Action,\n");
+                break;
+            case SKILLS_HOARD:
+                printf("Hoard,\n");
+                break;
+            case SKILLS_SNIPER:
+                printf("Sniper,\n");
+                break;
+            case SKILLS_TOUGH:
+                printf("Tough,\n");
+                break;
+            default:
+                break;
         }
+        printf("\n");
     }
-    return false;
-}
-
-bool inRedLevels(uint32_t experience)
-{
-    for (uint32_t i = 0; i < 3; i++)
-    {
-        if (experience == redLevels[i])
-        {
-            return true;
-        }
-    }
-    return false;
 }
 
 int main(int argc, char *argv[])
@@ -66,24 +76,25 @@ int main(int argc, char *argv[])
             printf("Kill zombie - 1\n");
             printf("Explore - 2\n");
             printf("End turn - 3\n");
-            printf("End game - 4\n");
+            printf("View skills - 4\n");
+            printf("End game - 5\n");
             printf("Enter an option: ");
             int option = 0;
             scanf("%d", &option);
             if(option == 1)
             {
                 KillZombie(activeSurvivor);
-                if (inYellowLevels(activeSurvivor->experience))
+                if (InYellowLevels(activeSurvivor->experience))
                 {
                     activeSurvivor->maxActions++;
-                    if (activeSurvivor->experience == yellowLevels[0])
+                    if (FirstYellowLevel(activeSurvivor->experience))
                     {
                         activeSurvivor->level = YELLOW;
                     }
                     AddNewSkill(activeSurvivor, SKILLS_PLUS_ONE_ACTION);
-                } else if (inOrangeLevels(activeSurvivor->experience))
+                } else if (InOrangeLevels(activeSurvivor->experience))
                 {
-                    if (activeSurvivor->experience == orangeLevels[0])
+                    if (FirstOrangeLevel(activeSurvivor->experience))
                     {
                         activeSurvivor->level = ORANGE;
                     }
@@ -104,9 +115,9 @@ int main(int argc, char *argv[])
                         default:
                             break;
                     }
-                } else if (inRedLevels(activeSurvivor->experience))
+                } else if (InRedLevels(activeSurvivor->experience))
                 {
-                    if (activeSurvivor->experience == redLevels[0])
+                    if (FirstRedLevel(activeSurvivor->experience))
                     {
                         activeSurvivor->level = RED;
                     }
@@ -142,6 +153,9 @@ int main(int argc, char *argv[])
             {
                 CompleteTurn(activeSurvivor);
             } else if(option == 4)
+            {
+                PrintSurvivorSkills(activeSurvivor);
+            } else if(option == 5)
             {
                 EndGame();
             } else {
