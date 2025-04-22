@@ -4,21 +4,10 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#include "Equipment.h"
+
 #define MAX_SURVIVOR_NAME_LEN 30
 #define MAX_EQUIPMENT 5
-
-typedef enum
-{
-    EQUIPMENT_BASEBALL_BAT,
-    EQUIPMENT_FRYING_PAN,
-    EQUIPMENT_KATANA,
-    EQUIPMENT_PISTOL,
-    EQUIPMENT_ASSAULT_RIFLE,
-    EQUIPMENT_BOTTLED_WATER,
-    EQUIPMENT_MOLOTOV,
-    EQUIPMENT_WOUND,
-    EQUIPMENT_NONE
-} Equipment_E;
 
 typedef enum
 {

@@ -18,10 +18,7 @@ typedef struct
 {
     Equipment_E id;
     uint8_t accuracy;
-    
+    uint8_t dice;
+    uint8_t range;
 } EquipmentAttributes_S;
 
-EquipmentAttributes_S pistol =
-{
-    
-};
