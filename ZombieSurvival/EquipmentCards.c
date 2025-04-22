@@ -32,9 +32,9 @@ static Equipment_E RemoveCard(int cardIndex)
 
 void PrintEquipmentCardDeck()
 {
+    printf("Equipment cards in deck:\n");
     for (int i = front; i < back; i++)
     {
-        printf("Equipment cards in deck:\n");
         switch(cards[i])
         {
             case EQUIPMENT_BASEBALL_BAT:
@@ -93,7 +93,7 @@ void SetupEquipmentCardDeck()
     cards[26] = EQUIPMENT_BOTTLED_WATER;
     cards[27] = EQUIPMENT_KATANA;
     cards[28] = EQUIPMENT_FRYING_PAN;
-    cards[20] = EQUIPMENT_KATANA;
+    cards[29] = EQUIPMENT_KATANA;
     front = 0;
     back = NUMBER_OF_EQUIPMENT_CARDS - 1;
     numberOfCards = NUMBER_OF_EQUIPMENT_CARDS;
@@ -108,3 +108,4 @@ Equipment_E DrawEquipmentCard()
     RemoveCard(newCardIndex);
     return equipmentToReturn;
 }
+
