@@ -1,66 +1,71 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+
 #include "Survivor.h"
 #include "TurnQueue.h"
 #include "GameManager.h"
+#include "EquipmentCards.h"
 
 #define MAX_SURVIVORS 5
 
-/*
-    SKILLS_PLUS_ONE_ACTION,
-    SKILLS_PLUS_ONE_DIE_RANGED,
-    SKILLS_PLUS_ONE_DIE_MELEE,
-    SKILLS_PLUS_ONE_FREE_MOVE_ACTION,
-    SKILLS_HOARD,
-    SKILLS_SNIPER,
-    SKILLS_TOUGH,
-    SKILLS_NONE
-*/
-
-void PrintSurvivorSkills(Survivor_S *survivor)
+void PrintSingleInventoryItem(Equipment_E equipment)
 {
-    printf("%s\'s skills:\n", survivor->name);
-    for (int i = 0; i < 10; i++)
+    switch(equipment)
     {
-        if (survivor->skills[i] == SKILLS_NONE)
-        {
+        case EQUIPMENT_BASEBALL_BAT:
+            printf("baseball bat");
             break;
-        }
-        switch(survivor->skills[i])
-        {
-            case SKILLS_PLUS_ONE_ACTION:
-                printf("+1 One Action,\n");
-                break;
-            case SKILLS_PLUS_ONE_DIE_RANGED:
-                printf("+1 One Die Ranged,\n");
-                break;
-            case SKILLS_PLUS_ONE_DIE_MELEE:
-                printf("+1 One Die Melee,\n");
-                break;
-            case SKILLS_PLUS_ONE_FREE_MOVE_ACTION:
-                printf("+1 One Free Move Action,\n");
-                break;
-            case SKILLS_HOARD:
-                printf("Hoard,\n");
-                break;
-            case SKILLS_SNIPER:
-                printf("Sniper,\n");
-                break;
-            case SKILLS_TOUGH:
-                printf("Tough,\n");
-                break;
-            default:
-                break;
-        }
-        printf("\n");
+        case EQUIPMENT_FRYING_PAN:
+            printf("frying pan");
+            break;
+        case EQUIPMENT_KATANA:
+            printf("katana");
+            break;
+        case EQUIPMENT_PISTOL:
+            printf("pistol");
+            break;
+        case EQUIPMENT_ASSAULT_RIFLE:
+            printf("assault rifle");
+            break;
+        case EQUIPMENT_BOTTLED_WATER:
+            printf("bottled water");
+            break;
+        case EQUIPMENT_MOLOTOV:
+            printf("molotov");
+            break;
+        case EQUIPMENT_WOUND:
+            printf("wound");
+            break;
+        case EQUIPMENT_NONE:
+            printf("empty");
+            break;
     }
 }
 
-int main(int argc, char *argv[])
+void PrintInventoryItems(Survivor_S *survivor)
 {
-    Survivor_S survivor1, survivor2, survivor3, survivor4, survivor5;
+    printf("%s's in-hand items: ", survivor->name);
+    PrintSingleInventoryItem(survivor->inHandItems[0]);
+    printf(",");
+    PrintSingleInventoryItem(survivor->inHandItems[1]);
+    printf("\n");
+    printf("%s's reserves items: ", survivor->name);
+    PrintSingleInventoryItem(survivor->reservesItems[0]);
+    printf(",");
+    PrintSingleInventoryItem(survivor->reservesItems[1]);
+    printf(",");
+    PrintSingleInventoryItem(survivor->reservesItems[2]);
+    printf("\n");
+}
 
+int main()
+{
+    Survivor_S survivor1, survivor2,
+               survivor3, survivor4,
+               survivor5;
+
+    SetupEquipmentCardDeck();
     InitializeTurnQueue();
     printf("\n");
     StartGame();
@@ -73,16 +78,17 @@ int main(int argc, char *argv[])
             printf("%s\'s turn, actions left: %u\n", activeSurvivor->name, activeSurvivor->maxActions - activeSurvivor->actions);
             printf("%s\'s experience: %u\n", activeSurvivor->name, activeSurvivor->experience);
             printf("Options: \n");
-            printf("Kill zombie - 1\n");
-            printf("Explore - 2\n");
-            printf("End turn - 3\n");
-            printf("View skills - 4\n");
+            printf("Attack - 1\n");
+            printf("Move - 2\n");
+            printf("View skils - 3\n");
+            printf("Search - 4\n");
             printf("End game - 5\n");
             printf("Enter an option: ");
             int option = 0;
             scanf("%d", &option);
             if(option == 1)
             {
+                // Perform combat action
                 KillZombie(activeSurvivor);
                 if (InYellowLevels(activeSurvivor->experience))
                 {
@@ -146,15 +152,66 @@ int main(int argc, char *argv[])
                 CompleteAction(activeSurvivor);
             } else if(option == 2)
             {
+                // Perform move action
                 printf("\n");
                 printf("Exploring terrain\n");
                 CompleteAction(activeSurvivor);
             } else if(option == 3)
             {
-                CompleteTurn(activeSurvivor);
+                // Print survivor skills
+                PrintSurvivorSkills(activeSurvivor);
             } else if(option == 4)
             {
-                PrintSurvivorSkills(activeSurvivor);
+                // Search crate for new equipment
+                printf("\n");
+                Equipment_E newEquipment = DrawEquipmentCard();
+                printf("%s found a ", activeSurvivor->name);
+                switch(newEquipment)
+                {
+                    case EQUIPMENT_BASEBALL_BAT:
+                        printf("baseball bat\n");
+                        break;
+                    case EQUIPMENT_FRYING_PAN:
+                        printf("frying pan\n");
+                        break;
+                    case EQUIPMENT_KATANA:
+                        printf("katana\n");
+                        break;
+                    case EQUIPMENT_PISTOL:
+                        printf("pistol\n");
+                        break;
+                    case EQUIPMENT_ASSAULT_RIFLE:
+                        printf("assault rifle\n");
+                        break;
+                    case EQUIPMENT_BOTTLED_WATER:
+                        printf("bottled water\n");
+                        break;
+                    case EQUIPMENT_MOLOTOV:
+                        printf("molotov\n");
+                        break;
+                    default:
+                        break;
+                }
+                printf("Select an inventory slot to place the new equipment\n");
+                PrintInventoryItems(activeSurvivor);
+                printf("In-hand slot 1 - 1\n");
+                printf("In-hand slot 2 - 2\n");
+                printf("Reserves slot 1 - 3\n");
+                printf("Reserves slot 2 - 4\n");
+                printf("Reserves slot 3 - 5\n");
+                int option = 0;
+                scanf("%d", &option);
+                switch(option)
+                {
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                
+                }
+                CompleteAction(activeSurvivor);
             } else if(option == 5)
             {
                 EndGame();
@@ -172,6 +229,7 @@ int main(int argc, char *argv[])
             printf("\n");
             if(option == 1)
             {
+                // TODO: Replace with selecting from pre-made list of survivors
                 char name[255];
                 printf("Enter a survivor name: ");
                 scanf("%s", name);
@@ -182,6 +240,7 @@ int main(int argc, char *argv[])
                 printf("\n");
             } else if(option == 2)
             {
+                // End game
                 EndGame();
             } else {
                 continue;

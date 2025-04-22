@@ -9,13 +9,15 @@
 
 typedef enum
 {
-    BASEBALL_BAT,
-    FRYING_PAN,
-    KATANA,
-    PISTOL,
-    BOTTLED_WATER,
-    MOLOTOV,
-    NONE
+    EQUIPMENT_BASEBALL_BAT,
+    EQUIPMENT_FRYING_PAN,
+    EQUIPMENT_KATANA,
+    EQUIPMENT_PISTOL,
+    EQUIPMENT_ASSAULT_RIFLE,
+    EQUIPMENT_BOTTLED_WATER,
+    EQUIPMENT_MOLOTOV,
+    EQUIPMENT_WOUND,
+    EQUIPMENT_NONE
 } Equipment_E;
 
 typedef enum
@@ -45,8 +47,8 @@ typedef struct
     uint8_t maxWounds;
     uint8_t actions;
     uint8_t maxActions;
-    Equipment_E InHandItems[2];
-    Equipment_E ReservesItems[5];
+    Equipment_E inHandItems[2];
+    Equipment_E reservesItems[5];
     uint32_t experience;
     Level_E level;
     Skills_E skills[10];
@@ -59,6 +61,8 @@ bool FirstRedLevel(uint32_t experience);
 bool InYellowLevels(uint32_t experience);
 bool InOrangeLevels(uint32_t experience);
 bool InRedLevels(uint32_t experience);
+
+void PrintSurvivorSkills(Survivor_S *survivor);
 
 void CreateSurvivor(Survivor_S *newSurvivor, char *name, size_t nameLen);
 int GetItemCount(Survivor_S *survivor);

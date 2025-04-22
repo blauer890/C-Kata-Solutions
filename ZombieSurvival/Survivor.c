@@ -58,6 +58,45 @@ bool InRedLevels(uint32_t experience)
     return false;
 }
 
+void PrintSurvivorSkills(Survivor_S *survivor)
+{
+    printf("%s\'s skills:\n", survivor->name);
+    for (int i = 0; i < 10; i++)
+    {
+        if (survivor->skills[i] == SKILLS_NONE)
+        {
+            break;
+        }
+        switch(survivor->skills[i])
+        {
+            case SKILLS_PLUS_ONE_ACTION:
+                printf("+1 One Action,\n");
+                break;
+            case SKILLS_PLUS_ONE_DIE_RANGED:
+                printf("+1 One Die Ranged,\n");
+                break;
+            case SKILLS_PLUS_ONE_DIE_MELEE:
+                printf("+1 One Die Melee,\n");
+                break;
+            case SKILLS_PLUS_ONE_FREE_MOVE_ACTION:
+                printf("+1 One Free Move Action,\n");
+                break;
+            case SKILLS_HOARD:
+                printf("Hoard,\n");
+                break;
+            case SKILLS_SNIPER:
+                printf("Sniper,\n");
+                break;
+            case SKILLS_TOUGH:
+                printf("Tough,\n");
+                break;
+            default:
+                break;
+        }
+    }
+    printf("\n");
+}
+
 void CreateSurvivor(Survivor_S *newSurvivor, char *name, size_t nameLen)
 {
     assert(nameLen < MAX_SURVIVOR_NAME_LEN);
@@ -66,6 +105,11 @@ void CreateSurvivor(Survivor_S *newSurvivor, char *name, size_t nameLen)
     newSurvivor->maxWounds = 2;
     newSurvivor->actions = 0;
     newSurvivor->maxActions = 3;
+    newSurvivor->inHandItems[0] = EQUIPMENT_NONE;
+    newSurvivor->inHandItems[1] = EQUIPMENT_NONE;
+    newSurvivor->reservesItems[0] = EQUIPMENT_NONE;
+    newSurvivor->reservesItems[1] = EQUIPMENT_NONE;
+    newSurvivor->reservesItems[2] = EQUIPMENT_NONE;
     newSurvivor->experience = 0;
     newSurvivor->level = BLUE;
     for(int i = 0; i < 10; i++)
@@ -79,14 +123,14 @@ int GetItemCount(Survivor_S *survivor)
     uint32_t itemCount = 0;
     for(uint8_t i = 0; i < 2; i++)
     {
-        if(survivor->InHandItems[i] != NONE)
+        if(survivor->inHandItems[i] != EQUIPMENT_NONE)
         {
             itemCount++;
         }
     }
     for(uint8_t i = 0; i < 5; i++)
     {
-        if(survivor->ReservesItems[i] != NONE)
+        if(survivor->reservesItems[i] != EQUIPMENT_NONE)
         {
             itemCount++;
         }

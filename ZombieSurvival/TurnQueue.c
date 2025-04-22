@@ -96,12 +96,12 @@ void WoundSurvivor(Survivor_S *survivor)
             uint8_t lastReserveItemIndex = 0;
             for(uint8_t i = 0; i < 5; i++)
             {
-                if(survivor->ReservesItems[i] != NONE)
+                if(survivor->reservesItems[i] != EQUIPMENT_NONE)
                 {
                     lastReserveItemIndex = i;
                 }
             }
-            survivor->ReservesItems[lastReserveItemIndex] = NONE;
+            survivor->reservesItems[lastReserveItemIndex] = EQUIPMENT_NONE;
         }
     }
     printf("Survivor %s was wounded\n", survivor->name);

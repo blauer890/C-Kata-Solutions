@@ -1,5 +1,5 @@
-menu: menu.c Survivor.c TurnQueue.c GameManager.c
-	gcc -g -o menu menu.c Survivor.c TurnQueue.c GameManager.c
+menu: menu.c Survivor.c TurnQueue.c GameManager.c EquipmentCards.c
+	gcc -g -o menu menu.c Survivor.c TurnQueue.c GameManager.c EquipmentCards.c
 
 all: menu
 

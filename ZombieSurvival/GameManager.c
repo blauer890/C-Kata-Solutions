@@ -12,7 +12,7 @@ void StartGame()
 
 void EndGame()
 {
-    printf("Game ended\n");
+    printf("Game ended");
     GameActive = false;
 }
 
