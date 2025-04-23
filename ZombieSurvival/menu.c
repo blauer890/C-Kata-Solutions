@@ -178,7 +178,7 @@ void EquipmentSearch(Survivor_S *survivor)
             }
             break;
         case 2:
-            if (survivor->inHandItems[1] = EQUIPMENT_WOUND)
+            if (survivor->inHandItems[1] == EQUIPMENT_WOUND)
             {
                 printf("Wound card in in-hand slot 2, unable to equip new item\n");
             }
