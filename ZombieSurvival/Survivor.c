@@ -70,25 +70,25 @@ void PrintSurvivorSkills(Survivor_S *survivor)
         switch(survivor->skills[i])
         {
             case SKILLS_PLUS_ONE_ACTION:
-                printf("+1 One Action,\n");
+                printf("+1 One Action\n");
                 break;
             case SKILLS_PLUS_ONE_DIE_RANGED:
-                printf("+1 One Die Ranged,\n");
+                printf("+1 One Die Ranged\n");
                 break;
             case SKILLS_PLUS_ONE_DIE_MELEE:
-                printf("+1 One Die Melee,\n");
+                printf("+1 One Die Melee\n");
                 break;
             case SKILLS_PLUS_ONE_FREE_MOVE_ACTION:
-                printf("+1 One Free Move Action,\n");
+                printf("+1 One Free Move Action\n");
                 break;
             case SKILLS_HOARD:
-                printf("Hoard,\n");
+                printf("Hoard\n");
                 break;
             case SKILLS_SNIPER:
-                printf("Sniper,\n");
+                printf("Sniper\n");
                 break;
             case SKILLS_TOUGH:
-                printf("Tough,\n");
+                printf("Tough\n");
                 break;
             default:
                 break;

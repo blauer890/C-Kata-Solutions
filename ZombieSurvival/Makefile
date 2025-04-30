@@ -1,7 +1,7 @@
-menu: menu.c Survivor.c TurnQueue.c GameManager.c EquipmentCards.c
-	gcc -g -o menu menu.c Survivor.c TurnQueue.c GameManager.c EquipmentCards.c
+menu: Menu.c Survivor.c TurnQueue.c GameManager.c EquipmentCards.c GameBoard.c Equipment.c
+	gcc -g -o Menu Menu.c Survivor.c TurnQueue.c GameManager.c EquipmentCards.c GameBoard.c Equipment.c
 
-all: menu
+all: Menu
 
 clean:
-	rm menu
+	rm Menu

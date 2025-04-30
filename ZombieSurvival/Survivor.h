@@ -26,12 +26,13 @@ typedef enum
     SKILLS_HOARD,
     SKILLS_SNIPER,
     SKILLS_TOUGH,
-    SKILLS_NONE
+    SKILLS_NONE = 255
 } Skills_E;
 
 typedef struct
 {
     char name[MAX_SURVIVOR_NAME_LEN];
+    uint16_t id;
     uint8_t wounds;
     uint8_t maxWounds;
     uint8_t actions;
@@ -40,6 +41,8 @@ typedef struct
     Equipment_E reservesItems[5];
     uint32_t experience;
     Level_E level;
+    Skills_E orangeSkills[2];
+    Skills_E redSkills[3];
     Skills_E skills[10];
 } Survivor_S;
 

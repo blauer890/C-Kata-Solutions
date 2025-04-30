@@ -1,18 +1,65 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <stdlib.h>
+#include <time.h>
 
 #include "Survivor.h"
 #include "TurnQueue.h"
 #include "GameManager.h"
 #include "Equipment.h"
 #include "EquipmentCards.h"
+#include "GameBoard.h"
 
 #define MAX_SURVIVORS 5
 
 void PerformCombatAction(Survivor_S *survivor)
 {
     // Perform combat action
+    char leftHandPrompt[255];
+    bool leftHandWeapon = false;
+    char rightHandPrompt[255];
+    bool rightHandWeapon = false;
+    if (IsWeapon(survivor->inHandItems[0]))
+    {
+        char weaponString[50];
+        GetWeaponString(survivor->inHandItems[0], weaponString);
+        sprintf(leftHandPrompt, "Attack with left-hand item %s - L", weaponString);
+        leftHandWeapon = true;
+    }
+    if (IsWeapon(survivor->inHandItems[1]))
+    {
+        char weaponString[50];
+        GetWeaponString(survivor->inHandItems[1], weaponString);
+        sprintf(rightHandPrompt, "Attack with right-hand item %s - R", weaponString);
+        rightHandWeapon = true;
+    }
+
+    if (leftHandWeapon)
+    {
+        printf("%s\n", leftHandPrompt);
+    }
+    if (rightHandWeapon)
+    {
+        printf("%s\n", rightHandPrompt);
+    }
+
+    if (!leftHandWeapon && !rightHandWeapon)
+    {
+        printf("No valid weapons in hand\n");
+        return;
+    }
+
+    char option = 0;
+    scanf(" %c", &option);
+    if ((option == 'L') && leftHandWeapon)
+    {
+        // TODO: Implement left-hand combat
+    } else if ((option == 'R') && rightHandWeapon)
+    {
+        // TODO: Implement right-hand combat
+    }
+
     KillZombie(survivor);
     if (InYellowLevels(survivor->experience))
     {
@@ -214,12 +261,15 @@ void EquipmentSearch(Survivor_S *survivor)
     CompleteAction(survivor);
 }
 
-int main()
+int main(int argc, char *argv[])
 {
     Survivor_S survivor1, survivor2,
                survivor3, survivor4,
                survivor5;
 
+    srand(time(NULL));
+
+    SetupGameBoard();
     SetupEquipmentCardDeck();
     InitializeTurnQueue();
     printf("\n");
@@ -230,12 +280,14 @@ int main()
         {
             Survivor_S *activeSurvivor;
             ActiveSurvivor(&activeSurvivor);
+            PrintGameBoard();
+
             printf("%s\'s turn, actions left: %u\n", activeSurvivor->name, activeSurvivor->maxActions - activeSurvivor->actions);
             printf("%s\'s experience: %u\n", activeSurvivor->name, activeSurvivor->experience);
             printf("Options: \n");
             printf("Attack - 1\n");
             printf("Move - 2\n");
-            printf("View skils - 3\n");
+            printf("View skills - 3\n");
             printf("Search - 4\n");
             printf("End game - 5\n");
             printf("Enter an option: ");
@@ -251,6 +303,7 @@ int main()
                     break;
                 case 3:
                     // Print survivor skills
+                    printf("\n");
                     PrintSurvivorSkills(activeSurvivor);
                     break;
                 case 4:
@@ -281,6 +334,7 @@ int main()
                 printf("Creating survivor...\n");
                 CreateSurvivor(&survivor1,name,strlen(name));
                 AddSurvivor(&survivor1);
+                AddSurvivorToBoard(&survivor1);
                 printf("\n");
             } else if(option == 2)
             {
