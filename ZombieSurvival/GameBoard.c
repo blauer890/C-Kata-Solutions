@@ -110,10 +110,12 @@ void AttackValid(Survivor_S *survivor)
     LookupEquipmentAttributes(survivor->inHandItems[0], &inHandItem0);
     LookupEquipmentAttributes(survivor->inHandItems[1], &inHandItem1);
 
+    // TODO: Check whether attack is valid
 }
 
 void MoveSurvivorOnBoard(Survivor_S *survivor)
 {
+    // TODO: Implement this for a given survivor
 }
 
 static void AddZombie()
