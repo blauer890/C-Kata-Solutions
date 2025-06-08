@@ -5,112 +5,157 @@
 
 #include "SevenSegments.h"
 
+// width: 1, height: 1
 // _ 
 //|_|
 //|_|
 
-void SevenSegments::printDigit()
-{
-    std::cout << " " << getSegmentAChar() << " " << std::endl;
-    std::cout << getSegmentFChar() << getSegmentGChar() << getSegmentBChar() << std::endl;
-    std::cout << getSegmentEChar() << getSegmentDChar() << getSegmentCChar() << std::endl;
-}
+// width: 3, height: 2
+// ___ 
+//|   |
+//|___|
+//|   |
+//|___|
 
-std::string SevenSegments::getTopLine()
+void SevenSegments::getTopSection(std::stringstream &rows, std::string numStr, int width)
 {
-    std::stringstream topLineString;
-    topLineString << " " << getSegmentAChar() << " ";
-    return topLineString.str();
-}
-
-std::string SevenSegments::getMiddleLine()
-{
-    std::stringstream middleLineString;
-    middleLineString << getSegmentFChar() << getSegmentGChar() << getSegmentBChar();
-    return middleLineString.str();
-}
-
-std::string SevenSegments::getBottomLine()
-{
-    std::stringstream bottomLineString;
-    bottomLineString << getSegmentEChar() << getSegmentDChar() << getSegmentCChar();
-    return bottomLineString.str();
-}
-
-
-char SevenSegments::getSegmentAChar()
-{
-    if (m_segmentA)
+    for (char numChar : numStr)
     {
-        return '_';
-    } else
-    {
-        return ' ';
+        rows << ' ';
+        for (int i = 0; i < width; i++)
+        {
+            if (m_digitMap.at(numChar) & 0b00000001)
+            {
+                rows << '_';
+            } else
+            {
+                rows << ' ';
+            }
+        }
+        rows << ' ';
     }
+    rows << std::endl;
 }
 
-char SevenSegments::getSegmentBChar()
+void SevenSegments::getMiddleSection(std::stringstream &rows, std::string numStr, int width, int height)
 {
-    if (m_segmentB)
+    for (int i = 0; i < height - 1; i++)
     {
-        return '|';
-    } else
-    {
-        return ' ';
+        for (char numChar : numStr)
+        {
+            if ((m_digitMap.at(numChar) & 0b00100000) >> 5)
+            {
+                rows << '|';
+            } else
+            {
+                rows << ' ';
+            }
+            for (int j = 0; j < width; j++)
+            {
+                rows << ' ';
+            }
+            if ((m_digitMap.at(numChar) & 0b00000010) >> 1)
+            {
+                rows << '|';
+            } else
+            {
+                rows << ' ';
+            }
+        }
+        rows << std::endl;
     }
+    for (char numChar : numStr)
+    {
+        if ((m_digitMap.at(numChar) & 0b00100000) >> 5)
+        {
+            rows << '|';
+        } else
+        {
+            rows << ' ';
+        }
+        for (int i = 0; i < width; i++)
+        {
+            if ((m_digitMap.at(numChar) & 0b01000000) >> 6)
+            {
+                rows << '_';
+            } else
+            {
+                rows << ' ';
+            }
+        }
+        if ((m_digitMap.at(numChar) & 0b00000010) >> 1)
+        {
+            rows << '|';
+        } else
+        {
+            rows << ' ';
+        }
+    }
+    rows << std::endl;
 }
 
-char SevenSegments::getSegmentCChar()
+void SevenSegments::getBottomSection(std::stringstream &rows, std::string numStr, int width, int height)
 {
-    if (m_segmentC)
+    for (int i = 0; i < height - 1; i++)
     {
-        return '|';
-    } else
-    {
-        return ' ';
+        for (char numChar : numStr)
+        {
+            if ((m_digitMap.at(numChar) & 0b00010000) >> 4)
+            {
+                rows << '|';
+            } else
+            {
+                rows << ' ';
+            }
+            for (int j = 0; j < width; j++)
+            {
+                rows << ' ';
+            }
+            if ((m_digitMap.at(numChar) & 0b00000100) >> 2)
+            {
+                rows << '|';
+            } else
+            {
+                rows << ' ';
+            }
+        }
+        rows << std::endl;
     }
+    for (char numChar : numStr)
+    {
+        if ((m_digitMap.at(numChar) & 0b00010000) >> 4)
+        {
+            rows << '|';
+        } else
+        {
+            rows << ' ';
+        }
+        for (int i = 0; i < width; i++)
+        {
+            if ((m_digitMap.at(numChar) & 0b00001000) >> 3)
+            {
+                rows << '_';
+            } else
+            {
+                rows << ' ';
+            }
+        }
+        if ((m_digitMap.at(numChar) & 0b00000100) >> 2)
+        {
+            rows << '|';
+        } else
+        {
+            rows << ' ';
+        }
+    }
+    rows << std::endl;
 }
 
-char SevenSegments::getSegmentDChar()
+std::string SevenSegments::getLCDRows(std::string numStr, int width, int height)
 {
-    if (m_segmentD)
-    {
-        return '_';
-    } else
-    {
-        return ' ';
-    }
-}
-
-char SevenSegments::getSegmentEChar()
-{
-    if (m_segmentE)
-    {
-        return '|';
-    } else
-    {
-        return ' ';
-    }
-}
-
-char SevenSegments::getSegmentFChar()
-{
-    if (m_segmentF)
-    {
-        return '|';
-    } else
-    {
-        return ' ';
-    }
-}
-
-char SevenSegments::getSegmentGChar()
-{
-    if (m_segmentG)
-    {
-        return '_';
-    } else
-    {
-        return ' ';
-    }
+    std::stringstream rows;
+    getTopSection(rows, numStr, width);
+    getMiddleSection(rows, numStr, width, height);
+    getBottomSection(rows, numStr, width, height);
+    return rows.str();
 }

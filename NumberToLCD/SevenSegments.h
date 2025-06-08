@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
 
 // _ 
 //|_|
@@ -9,38 +10,29 @@
 class SevenSegments
 {
 public:
-    SevenSegments(int segmentFlags)
+    SevenSegments() : m_digitMap{}
     {
-        m_segmentA = static_cast<bool>( segmentFlags & 0b00000001);
-        m_segmentB = static_cast<bool>((segmentFlags & 0b00000010) >> 1);
-        m_segmentC = static_cast<bool>((segmentFlags & 0b00000100) >> 2);
-        m_segmentD = static_cast<bool>((segmentFlags & 0b00001000) >> 3);
-        m_segmentE = static_cast<bool>((segmentFlags & 0b00010000) >> 4);
-        m_segmentF = static_cast<bool>((segmentFlags & 0b00100000) >> 5);
-        m_segmentG = static_cast<bool>((segmentFlags & 0b01000000) >> 6);
+        m_digitMap.insert({'0', 0b00111111});
+        m_digitMap.insert({'1', 0b00000110});
+        m_digitMap.insert({'2', 0b01011011});
+        m_digitMap.insert({'3', 0b01001111});
+        m_digitMap.insert({'4', 0b01100110});
+        m_digitMap.insert({'5', 0b01101101});
+        m_digitMap.insert({'6', 0b01111101});
+        m_digitMap.insert({'7', 0b00000111});
+        m_digitMap.insert({'8', 0b01111111});
+        m_digitMap.insert({'9', 0b01101111});
     }
 
-    void printDigit();
+private:
+    void getTopSection(std::stringstream &rows, std::string numStr, int width);
+    void getMiddleSection(std::stringstream &rows, std::string numStr, int width, int height);
+    void getBottomSection(std::stringstream &rows, std::string numStr, int width, int height);
 
-    std::string getTopLine();
-    std::string getMiddleLine();
-    std::string getBottomLine();
+public:
+    std::string getLCDRows(std::string numStr, int width, int height);
 
 private:
-    char getSegmentAChar();
-    char getSegmentBChar();
-    char getSegmentCChar();
-    char getSegmentDChar();
-    char getSegmentEChar();
-    char getSegmentFChar();
-    char getSegmentGChar();
-
-    bool m_segmentA;
-    bool m_segmentB;
-    bool m_segmentC;
-    bool m_segmentD;
-    bool m_segmentE;
-    bool m_segmentF;
-    bool m_segmentG;
+    std::unordered_map<char, int> m_digitMap;
 };
 
