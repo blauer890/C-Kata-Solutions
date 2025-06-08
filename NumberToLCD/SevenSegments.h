@@ -3,9 +3,17 @@
 #include <string>
 #include <unordered_map>
 
+// width: 1, height: 1
 // _ 
 //|_|
 //|_|
+
+// width: 3, height: 2
+// ___ 
+//|   |
+//|___|
+//|   |
+//|___|
 
 class SevenSegments
 {
