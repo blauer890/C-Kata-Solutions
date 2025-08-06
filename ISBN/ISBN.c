@@ -54,19 +54,19 @@ bool isISBN13(char *ISBNStr)
 static char computeISBN10CheckDigit(char *numStr, uint8_t numDigits)
 {
     uint16_t sum = 0;
-    uint8_t checkDigitNum = 0;
+    uint16_t checkDigitNum = 0;
     for (uint8_t i = 0; i < numDigits; i++)
     {
         uint8_t digit = (uint8_t)(numStr[i] - 48);
         sum += (digit * (i + 1));
     }
     checkDigitNum = sum % 11;
-    switch(checkDigitNum)
+    if (checkDigitNum == 10)
     {
-        case 10:
-            return 'X';
-        default:
-            return (char)(checkDigitNum + 48);
+        return 'X';
+    } else
+    {
+        return (char)(checkDigitNum + 48);
     }
 }
 
